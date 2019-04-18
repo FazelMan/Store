@@ -52,8 +52,14 @@ namespace Store.Web.Controllers
         [ProducesResponseType((int)HttpStatusCode.Created)]
         public async Task<IActionResult> InsertAsync(PurchaseInsert purchaseInsert)
         {
-            //بررسی موجودی انبار
+            // get stock quantity
             int productSkuExistCount = await _productSkuService.GetExistCountAsync(purchaseInsert.ProductSkuId);
+
+            if (productSkuExistCount == 0)
+            {
+                return BadRequest("INVENTORY_IS_EMPTY");
+            }
+
             if (purchaseInsert.Quantity > productSkuExistCount)
             {
                 return BadRequest("INVENTORY_IS_NOT_ENOUGH");
@@ -79,8 +85,9 @@ namespace Store.Web.Controllers
         [ProducesResponseType((int)HttpStatusCode.Accepted)]
         public async Task<IActionResult> UpdateAsync(PurchaseUpdate purchaseUpdate)
         {
-            // check stock
+            // get stock quantity
             int productSkuExistCount = await _productSkuService.GetExistCountAsync(purchaseUpdate.ProductSkuId);
+
             if (purchaseUpdate.Quantity > productSkuExistCount)
             {
                 return BadRequest("INVENTORY_IS_NOT_ENOUGH");

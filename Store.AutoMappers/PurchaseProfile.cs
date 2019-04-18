@@ -9,6 +9,8 @@ namespace Store.AutoMappers
         public PurchaseProfile()
         {
             CreateMap<Purchase, PurchaseGet>()
+              .ForMember(x => x.Price, m => m.MapFrom(s => s.ProductSku.Price))
+              .ForMember(x => x.ProductSkuId, m => m.MapFrom(s => s.ProductSku.Id))
               .ForMember(x => x.ProductSkuTitle, m => m.MapFrom(s => s.ProductSku.Title))
               .ForMember(x => x.ProductTitle, m => m.MapFrom(s => s.ProductSku.Product.Title))
               .ReverseMap();

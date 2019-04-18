@@ -13,7 +13,7 @@ namespace Store
         /// <summary>
         /// Ctor
         /// </summary>
-        /// <param name="source">source</param>
+        /// <param name="source">Source</param>
         /// <param name="pageIndex">Page index</param>
         /// <param name="pageSize">Page size</param>
         public PagedList(IQueryable<T> source, int pageIndex = 1, int pageSize = int.MaxValue)
