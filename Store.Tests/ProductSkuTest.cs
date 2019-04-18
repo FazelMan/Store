@@ -44,5 +44,32 @@ namespace Store.Tests
             //Assert  
             Assert.That(ex.Message, Is.EqualTo("Title is required!"));
         }
+
+        [Test]
+        public void Insert_Return_ProductSkuMustBeEntered()
+        {
+            //Arrange  
+            var productSku = new ProductSku();
+
+            //Act  
+            var ex = Assert.ThrowsAsync<ArgumentNullException>(() => _productSkuService.InsertAsync(productSku));
+
+            //Assert  
+            Assert.That(ex.Message, Is.EqualTo("ProductSku must be entered!"));
+        }
+
+
+        [Test]
+        public void Delete_IfZeroParameter_Return_InsertValidNumber()
+        {
+            //Arrange  
+            var productSku = new ProductSku();
+
+            //Act  
+            var ex = Assert.ThrowsAsync<Exception>(() => _productSkuService.DeleteAsync(0));
+
+            //Assert  
+            Assert.That(ex.Message, Is.EqualTo("Please insert Valid Number!"));
+        }
     }
 }

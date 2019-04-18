@@ -48,10 +48,16 @@ namespace Store.Data.EntityFrameworkCore.Services
 
         public async Task InsertAsync(ProductSku productSku)
         {
-            if (string.IsNullOrWhiteSpace( productSku.Title))
+            if (productSku == null)
+            {
+                throw new ArgumentNullException("ProductSku must be entered!");
+            }
+
+            if (string.IsNullOrWhiteSpace(productSku.Title))
             {
                 throw new Exception("Title is required!");
             }
+
             await _productSkuRepository.InsertAsync(productSku);
         }
 
@@ -63,6 +69,11 @@ namespace Store.Data.EntityFrameworkCore.Services
 
         public async Task DeleteAsync(int id)
         {
+            if (id == 0)
+            {
+                throw new Exception("Please insert Valid Number!");
+            }
+
             await _productSkuRepository.DeleteAsync(id);
         }
 

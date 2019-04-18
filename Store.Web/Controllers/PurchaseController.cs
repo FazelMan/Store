@@ -58,7 +58,7 @@ namespace Store.Web.Controllers
             {
                 return BadRequest("INVENTORY_IS_NOT_ENOUGH");
             }
-         
+
             var purchase = new Purchase();
             _mapper.Map(purchaseInsert, purchase);
             await _purchaseService.InsertAsync(purchase);
@@ -105,10 +105,10 @@ namespace Store.Web.Controllers
         [ProducesResponseType((int)HttpStatusCode.Accepted)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            var purchase =await _purchaseService.GetPurchaseAsync(id);
             await _purchaseService.DeleteAsync(id);
 
             // update stock
+            var purchase = await _purchaseService.GetPurchaseAsync(id);
             await _productSkuService.UpdateInventoryAsync(purchase.ProductSkuId, purchase.Quantity);
             return Accepted();
         }
